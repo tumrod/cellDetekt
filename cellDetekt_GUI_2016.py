@@ -173,7 +173,7 @@ class ImagePreview:
         # enhance the original image
         self.original = Image.open(self.filedir+self.filename)
 
-        self.enhanceImg()
+        self.enhanceImg(self.outdir+ self.filename[:-4] + "_enhanced.jpg")
 
         self.img_file = self.imag10xenh
         x,y = self.img_file.size
@@ -256,9 +256,8 @@ class ImagePreview:
         position = str(self.img_x) + ", " + str(self.img_y)
         self.canv.coords(self.rect, x - 10, y - 10, x + 10, y + 10)
 
-    def enhanceImg(self):
-        self.file_enh = self.outdir+ self.filename[:-4] + "_enhanced.jpg"
-        if(os.path.exists(self.file_enh)):
+    def enhanceImg(self, enh_file):
+        if(os.path.exists(enh_file)):
             self.imag10xenh = Image.open(self.file_enh)
         else:
             self.status.set("Enhance image")
@@ -275,7 +274,7 @@ class ImagePreview:
             print "Image sharpness enhanced"
             del imag10xadj
             
-            self.imag10xenh.save(self.file_enh)
+            self.imag10xenh.save(enh_file)
             print "Enhanced image saved as jpeg"
 
     def preview_celldim(self):
@@ -346,7 +345,8 @@ class ImagePreview:
                 self.original = Image.open(f)
                 filePath = f.split("/")
                 filename = filePath[len(filePath)-1]
-                self.enhanceImg()
+                self.enhanceImg(self.outdir+ filename[:-4] + "_enhanced.jpg")
+                #self.imag10xenh = Image.open(self.file_enh)
                 if (self.chanw[0:3]=='10x'):
                     #print self.imag10xenh.split()
                     self.imr, self.img, self.imb= self.imag10xenh.split()

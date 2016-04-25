@@ -7,7 +7,7 @@ from numpy import *
 
 class ImagePreview:
     def __init__(self,root):
-        root.geometry("900x850") 
+        root.geometry("900x850")
         self.canv = Canvas(root, width=300, height=300)
         self.original = None
         self.imag10xenh = None
@@ -41,7 +41,7 @@ class ImagePreview:
 
         self.intro=Label(self.fm1, text="Welcome to Celldetekt version ##!")
         self.intro.pack(side=TOP)
-        
+
         self.lblthrs1=Label(self.fm1, text="\nStrong expression detection threshold")
         self.lblthrs1.pack(side=TOP)
         self.thres_entry=Entry(self.fm1)
@@ -165,14 +165,13 @@ class ImagePreview:
         self.chann = self.color_list[self.chn3.get()]
 
         self.status.set("Process original image")
-        
+
         self.outdir = self.dir2.get()
         self.filename = self.fn.get()
         self.orig_img = Image.open(self.filedir+self.filename)
 
         # enhance the original image
         self.original = Image.open(self.filedir+self.filename)
-
         self.enhanceImg(self.outdir+ self.filename[:-4] + "_enhanced.jpg")
 
         self.img_file = self.imag10xenh
@@ -198,7 +197,7 @@ class ImagePreview:
 
         self.canv4.update()
         self.canv4.after(0, self.create_img_a)
-        
+
     def rescale(self, x, y):
         # rescale the image
         new_x = x
@@ -228,7 +227,7 @@ class ImagePreview:
     def create_img_preview(self):
         self.rect = self.canv.create_rectangle(0, 0, 0, 0)
         self.canv.bind('<Motion>', self.roll_over)
-        self.canv.config(width=self.imgPreview.width(), height=self.imgPreview.height())  
+        self.canv.config(width=self.imgPreview.width(), height=self.imgPreview.height())
         self.obj1 = self.canv.create_image(0, 0, image=self.imgPreview, anchor=NW)
         self.canv.tag_bind(self.obj1, '<Button-1>', self.crop)
         self.canv.tag_raise(self.rect)
@@ -258,6 +257,7 @@ class ImagePreview:
 
     def enhanceImg(self, enh_file):
         if(os.path.exists(enh_file)):
+            self.file_enh = enh_file
             self.imag10xenh = Image.open(self.file_enh)
         else:
             self.status.set("Enhance image")
@@ -273,7 +273,7 @@ class ImagePreview:
             self.imag10xenh=ImageEnhance.Sharpness(imag10xadj).enhance(2).convert("RGB")
             print "Image sharpness enhanced"
             del imag10xadj
-            
+
             self.imag10xenh.save(enh_file)
             print "Enhanced image saved as jpeg"
 
@@ -318,7 +318,6 @@ class ImagePreview:
         self.imrgba = rgba_to_rgb(self.imrgba)
 
     def run_celldim(self, singleFile):
-        #print singleFile
         self.status.set("Processing----")
         self.thres= int(self.thres_entry.get())
         self.chan = self.color_list[self.chn1.get()]
@@ -337,16 +336,16 @@ class ImagePreview:
             parsefile=f.split(".")
             lpf=len(parsefile)
             f_ext=parsefile[lpf-1]
-            if ((f_ext<>"jpg")&(f_ext<>"tif")&(f_ext<>"png")&(f_ext<>"gif")&(f_ext<>"bmp")&(f_ext<>"tiff")):        
+            if ((f_ext<>"jpg")&(f_ext<>"tif")&(f_ext<>"png")&(f_ext<>"gif")&(f_ext<>"bmp")&(f_ext<>"tiff")):
                 print "Unrecognized image file type ",file
                 print "Must be jpg, jpeg, tif, tiff, png, gif, or bmp"
                 print "Skipping file"
-            else:   
+            else:
                 self.original = Image.open(f)
                 filePath = f.split("/")
                 filename = filePath[len(filePath)-1]
                 self.enhanceImg(self.outdir+ filename[:-4] + "_enhanced.jpg")
-                #self.imag10xenh = Image.open(self.file_enh)
+                self.imag10xenh = Image.open(self.file_enh)
                 if (self.chanw[0:3]=='10x'):
                     #print self.imag10xenh.split()
                     self.imr, self.img, self.imb= self.imag10xenh.split()
@@ -404,7 +403,7 @@ def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
     imc=im.crop([0,0,4*(im.size[0]/4),4*(im.size[1]/4)])
     ima5xc=ima5x.crop([0,0,4*(ima5x.size[0]/4),4*(ima5x.size[1]/4)])
     imr,img,imb=imc.split()
-    
+
     # create thresholded image for strong expression detection
     if (chan[0:3]=='10x'):
         ima=ima5xc.point(lambda i: i-thres,"1")
@@ -447,17 +446,17 @@ def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
 
     # create masking array
     ggmask=ones((ima.size[1],ima.size[0]))
-    
+
     # create mask image
     imamask=Image.new("1",ima.size,1)
-    
+
     # prepare RGBA at 25% scale for geneatlas.org
     imcsmallr,imcsmallg,imcsmallb=imc.resize((imc.size[0]/4,imc.size[1]/4),Image.ANTIALIAS).split()
     imcsmalla=Image.new("L",imcsmallr.size,255)
-    
+
     # create A-channel array for small rgba
     ggsmalla=ones((imcsmalla.size[1],imcsmalla.size[0]))+254
-    
+
     # create red,blue,green channels for big visual image
     ggbigr=zeros((im.size[1],im.size[0]))
     ggbigb=zeros((im.size[1],im.size[0]))
@@ -489,7 +488,7 @@ def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
 
     # mask out image and get new array
     #imamask.putdata(resize(ggmask,(1,ima.size[0]*ima.size[1]))[0])
-    #ima=ImageChops.lighter(ima,ImageChops.invert(imamask).point(lambda i: i-254))  
+    #ima=ImageChops.lighter(ima,ImageChops.invert(imamask).point(lambda i: i-254))
     g=ima.getdata()
     gg=resize(g,(ima.size[1],ima.size[0]))
 
@@ -567,7 +566,7 @@ def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
 
 
     ########################################################
-    
+
     # compute display picture
     imr,img,imb=im.split()
     imr.putdata(resize(ggbigr,(1,im.size[0]*im.size[1]))[0])
@@ -578,11 +577,11 @@ def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
 
     immask=ImageChops.invert(ImageChops.lighter(imb,ImageChops.lighter(imr,img)))
     im2=ImageChops.darker(im,Image.merge("RGB",(immask,immask,immask)))
-    
+
     imbnew=ImageChops.subtract(imb,imr)
     imgnew=ImageChops.subtract(ImageChops.subtract(img,imr),imbnew)
     imrnew=ImageChops.add(imgnew,imr)
-    
+
     imview=ImageChops.lighter(im2,Image.merge("RGB",(imrnew,imgnew,imbnew)))
 
     del imrnew,imgnew,imbnew,im2,immask, imr, img, imb
@@ -651,7 +650,7 @@ def rgba_to_rgb(imag_rgba):
             elif a==250:
                 r,g,b=128,128,128
             else:
-                r,g,b=0,0,0 
+                r,g,b=0,0,0
             im3.putpixel((x,y),(r,g,b))
     return im3
 

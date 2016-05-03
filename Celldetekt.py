@@ -1,12 +1,39 @@
-from Tkinter import *
-from tkFileDialog import askopenfilename, askdirectory
-from PIL import Image, ImageTk
-from PIL import ImageChops, Image, ImageFilter, ImageStat, ImageEnhance, PngImagePlugin, TiffImagePlugin, BmpImagePlugin, JpegImagePlugin
-import sys, os, glob
-from numpy import *
+# ---------------
+# Celldetekt.py
+# James P. carson
+# Tipparat Umrod
+# ---------------
 
+from Tkinter import *
+from numpy import *
+from tkFileDialog import askopenfilename, askdirectory
+from PIL import Image, ImageTk, ImageChops, Image, ImageFilter, ImageStat, ImageEnhance, PngImagePlugin, TiffImagePlugin, BmpImagePlugin, JpegImagePlugin
+import sys, os, glob
+
+# ------------
+# ImagePreview
+# ------------
 class ImagePreview:
+    '''
+    Class ImagePreview created the GUI for Celldetekt
+    '''
+
+    # ----
+    # init
+    # ----
+
     def __init__(self,root):
+        '''
+        initial setup with default input
+        window frame: 900 x 850
+        canv: middle column (whole image view)
+        original: None <original image file>
+        image10xeh: None <enhanced image file>
+        new_img: None <new image preview (selection)>
+        cropped: None <cropped selection>
+        color_list: red, green, blue, grey
+
+        '''
         root.geometry("900x850")
         self.canv = Canvas(root, width=300, height=300)
         self.original = None
@@ -16,16 +43,18 @@ class ImagePreview:
         self.color_list = ["red", "green", "blue", "grey"]
 
         # create toolbars/ controller
-        self.create_frame1()
+        self.setup_controller()
 
-        # create image preview
+        # create image preview frame (right column)
         self.fm2 = Frame(root, width=150, height=200)
         self.fm2.pack(side=RIGHT)
 
-        self.canv2 = Canvas(self.fm2, width=150, height=150)
-        self.canv3 = Canvas(self.fm2, width=150, height=150)
-        self.canv4 = Canvas(self.fm2, width=150, height=150)
+        # create image preview canvas (right column from top to bottom)
+        self.canv2 = Canvas(self.fm2, width=150, height=150)        # cropped of image/ selection preview
+        self.canv3 = Canvas(self.fm2, width=150, height=150)        # painted image
+        self.canv4 = Canvas(self.fm2, width=150, height=150)        # image_a
 
+        # label for each section
         self.canv3.pack(side=BOTTOM)
         Label(self.fm2, text="Painted", width=10).pack(side=BOTTOM)
         self.canv4.pack(side=BOTTOM)
@@ -34,8 +63,13 @@ class ImagePreview:
         self.canv2.pack(side=BOTTOM)
         Label(self.fm2, text="Selection", width=10).pack(side=BOTTOM)
 
-    # set up the controller
-    def create_frame1(self):
+    # ----------------
+    # setup_controller
+    # ----------------
+    def setup_controller(self):
+        '''
+        setup the controller bar (the left column)
+        '''
         self.fm1 = Frame(root, width=900, height=450)
         self.fm1.pack(side=LEFT, expand=NO, fill=NONE)
 
@@ -105,13 +139,13 @@ class ImagePreview:
         self.lblfn=Label(self.fm1, text="\nImage name")
         self.lblfn.pack(side=TOP)
         self.fn = StringVar()
-        self.outputDirBtn = Button(self.fm1, text='Choose File', command= lambda: self.selectFile(self.fn)).pack(side=TOP)
+        self.outputDirBtn = Button(self.fm1, text='Choose File', command= lambda: self.select_file(self.fn)).pack(side=TOP)
         Label(self.fm1, textvariable=self.fn).pack(side=TOP)
 
         self.lbldir2=Label(self.fm1, text="\nOutput Folder")
         self.lbldir2.pack(side=TOP)
         self.dir2 = StringVar()
-        self.outputDirBtn = Button(self.fm1, text='Choose Directory', command= lambda: self.selectFolder(self.dir2)).pack(side=TOP)
+        self.outputDirBtn = Button(self.fm1, text='Choose Directory', command= lambda: self.select_folder(self.dir2)).pack(side=TOP)
         Label(self.fm1, textvariable=self.dir2).pack(side=TOP)
 
         self.fm5 =Frame(self.fm1, width=450, height=15)
@@ -129,20 +163,34 @@ class ImagePreview:
         self.run_runFolder = Button(self.fm4, text="Run Folder", command= lambda: self.run_celldim(singleFile=False))
         self.run_runFolder.pack(side=LEFT)
 
-
-    # file selection popup
-    def selectFile(self, fn):
+    # ----------
+    # select_file
+    # ----------
+    def select_file(self, fn):
+        '''
+        select_file creates popup dialog for choosing file
+        fn: function passing in <this case is StringVar()>
+        '''
         fileName = askopenfilename()
         f = fileName.split("/")
         fileNameLen = len(f[len(f)-1])
         self.filedir = fileName[0:len(fileName)-fileNameLen]
         fn.set(f[len(f)-1])
 
-    # folder selection popup
-    def selectFolder(self, dir):
+    # -------------
+    # select_folder
+    # -------------
+    def select_folder(self, dir):
+        '''
+        select_folder creates popup dialog for choosing folder
+        dir: passing the directory
+        '''
         folderName = askdirectory()
         dir.set(folderName + "/")
 
+    # -----------
+    # run_preview
+    # -----------
     def run_preview(self):
         '''
         Run the preview of the cropped image
@@ -153,6 +201,9 @@ class ImagePreview:
         except ValueError:
             status.set("Input error, please try again")
 
+    # --------------------
+    # process_original_img
+    # --------------------
     def process_original_img(self):
         '''
         Process the original image
@@ -175,9 +226,10 @@ class ImagePreview:
         self.enhanceImg(self.outdir+ self.filename[:-4] + "_enhanced.png")
 
         self.img_file = self.imag10xenh
+
+        # rescale the image to be shown as a full image on middle column
         x,y = self.img_file.size
         self.rescale(x, y)
-
         self.img_file = self.img_file.resize((int(x/self.scale), int(y/self.scale)), resample=Image.NEAREST)
         self.imgPreview = ImageTk.PhotoImage(self.img_file)
         self.img_x, self.img_y = 450/2,450/2
@@ -185,21 +237,29 @@ class ImagePreview:
         if (self.cropped == None):
             self.cropped = self.orig_img.crop((int(self.img_x/2*self.scale)-60, int(self.img_y/2*self.scale)-60, int(self.img_x/2*self.scale)+60, int(self.img_y/2*self.scale)+60))
 
+        # image selection (cropped) preview
         self.create_img_preview()
-
         self.new_img = ImageTk.PhotoImage(self.cropped)
         self.canv2.update()
         self.canv2.after(0, self.create_canv2)
         self.preview_celldim()
 
+        # image_painted preview
         self.canv3.update()
         self.canv3.after(0, self.create_img_painted)
 
+        # image_a preview
         self.canv4.update()
         self.canv4.after(0, self.create_img_a)
 
+    # -------
+    # rescale
+    # -------
     def rescale(self, x, y):
-        # rescale the image
+        '''
+        Rescale the image to be within 450 x 450 pixel frame
+        Parameter: x: width, y: height
+        '''
         new_x = x
         new_y = y
         self.scale = 1
@@ -210,34 +270,78 @@ class ImagePreview:
         if (y > 450):
             new_y = new_y/self.scale
 
+    # ------------
+    # create_canv2
+    # ------------
     def create_canv2(self):
+        '''
+        Create Canv2, the cropped preview/ selection preview
+        '''
+        # show cropped image, self.new_img
         self.show_img = self.canv2.create_image(18, 18, image=self.new_img, anchor=NW)
         self.canv2.tag_raise(self.show_img)
 
+    # ------------------
+    # create_img_painted
+    # ------------------
     def create_img_painted(self):
+        '''
+        Create painted image after runing celldim
+        When running celldim, self.imv is created along with self.imrgb
+        create_img_painted() resize the resulting image (self.imv) and show in the preview
+        '''
         self.imv = self.imv.resize((int(self.imv.size[0]*self.cell_scale),int(self.imv.size[1]*self.cell_scale)),Image.BILINEAR)
         self.imv = ImageTk.PhotoImage(self.imv)
         self.canv3.create_image(18, 18, image=self.imv, anchor=NW)
 
+    # ------------
+    # create_img_a
+    # ------------
     def create_img_a(self):
+        '''
+        Create image a after runing celldim
+        When running celldim, self.imv is created along with self.imrgb
+        create_img_a() resize the resulting image (self.imrgb) and show in the preview
+        '''
         self.imrgba = self.imrgba.resize((int(self.imrgba.size[0]*self.cell_scale*4),int(self.imrgba.size[1]*self.cell_scale*4)), Image.NEAREST)
         self.imrgba = ImageTk.PhotoImage(self.imrgba)
         self.canv4.create_image(18, 18, image=self.imrgba, anchor=NW)
 
+    # ------------------
+    # create_img_preview
+    # ------------------
     def create_img_preview(self):
+        '''
+        Create the middle column (whole image preview)
+        Bind with mouse roll over for crop selection
+        '''
+        # box for curser
         self.rect = self.canv.create_rectangle(0, 0, 0, 0)
+
+        # mouse roll over
         self.canv.bind('<Motion>', self.roll_over)
         self.canv.config(width=self.imgPreview.width(), height=self.imgPreview.height())
         self.obj1 = self.canv.create_image(0, 0, image=self.imgPreview, anchor=NW)
+
+        # create crop image: self.crop when selected
         self.canv.tag_bind(self.obj1, '<Button-1>', self.crop)
         self.canv.tag_raise(self.rect)
 
+    # ----
+    # crop
+    # ----
     def crop(self, event):
+        '''
+        crop the selection by curser location (x, y) coordinate
+        update the image preview according to the cropped image
+        '''
         x, y = event.x, event.y
         self.img_x, self.img_y = event.x, event.y
         self.cropped = self.orig_img.crop((int(x*self.scale)-int(self.scale*10), int(y*self.scale)-int(self.scale*10), int(x*self.scale)+int(self.scale*10), int(y*self.scale)+int(self.scale*10)))
         self.cropped = self.cropped.resize((120, 120),Image.BILINEAR)
         self.new_img = ImageTk.PhotoImage(self.cropped)
+
+        # update all of the preview
         self.canv2.update()
         self.canv2.after(0, self.create_canv2)
         self.preview_celldim()
@@ -248,13 +352,18 @@ class ImagePreview:
         self.canv4.update()
         self.canv4.after(0, self.create_img_a)
 
-
+    # ---------
+    # roll_over
+    # ---------
     def roll_over(self, event):
         x, y = event.x, event.y
         self.img_x, self.img_y = event.x, event.y
         position = str(self.img_x) + ", " + str(self.img_y)
         self.canv.coords(self.rect, x - 10, y - 10, x + 10, y + 10)
 
+    # ----------
+    # enhanceImg
+    # ----------
     def enhanceImg(self, enh_file):
         if(os.path.exists(enh_file)):
             self.file_enh = enh_file
@@ -278,6 +387,9 @@ class ImagePreview:
             print "Enhanced image saved as jpeg"
             self.file_enh = enh_file
 
+    # ---------------
+    # preview_celldim
+    # ---------------
     def preview_celldim(self):
         self.status.set("Run on selected image")
         self.thres= int(self.thres_entry.get())
@@ -304,12 +416,10 @@ class ImagePreview:
 
         print "10x signal preserved"
         self.status.set("10x signal preserved")
-        #del ima
 
         self.imag=self.cropped.resize((int(self.cropped.size[0]/self.cell_scale),int(self.cropped.size[1]/self.cell_scale)),Image.ANTIALIAS)
         print "Image resized to 5x"
         self.status.set("Image resized to 5x")
-        #del imag10xenh
 
         self.status.set("Processing image takes awhile")
         self.imv,self.imrgba= celldim(self.imag,self.thres,self.chan,self.thresw,self.chanw,self.thresn,self.chann,self.ima5x)
@@ -318,6 +428,9 @@ class ImagePreview:
         self.status.set("Result--->>")
         self.imrgba = rgba_to_rgb(self.imrgba)
 
+    # -----------
+    # run_celldim
+    # -----------
     def run_celldim(self, singleFile):
         self.status.set("Processing----")
         self.thres= int(self.thres_entry.get())
@@ -328,6 +441,7 @@ class ImagePreview:
         self.chann = self.color_list[self.chn3.get()]
         self.outdir=self.dir2.get()
         self.filename=self.fn.get()
+
         if (singleFile):
             fileList = [self.filedir+self.filename]
         else:
@@ -348,7 +462,6 @@ class ImagePreview:
                 self.enhanceImg(self.outdir+ filename[:-4] + "_enhanced.png")
                 self.imag10xenh = Image.open(self.file_enh)
                 if (self.chanw[0:3]=='10x'):
-                    #print self.imag10xenh.split()
                     self.imr, self.img, self.imb= self.imag10xenh.split()
                 if self.chanw=="10xred":
                     self.ima=self.imr.point(lambda i: i-self.thresw, "1")
@@ -365,16 +478,13 @@ class ImagePreview:
 
                 print "10x signal preserved"
                 self.status.set("10x signal preserved")
-                #del ima
 
                 self.imag=self.imag10xenh.resize((int(self.imag10xenh.size[0]/self.cell_scale),int(self.imag10xenh.size[1]/self.cell_scale)),Image.ANTIALIAS)
                 print "Image resized to 5x"
                 self.status.set("Image resized to 5x")
-                #del imag10xenh
 
                 self.status.set("Detecting cells...")
                 self.imv,self.imrgba= celldim(self.imag,self.thres,self.chan,self.thresw,self.chanw,self.thresn,self.chann,self.ima5x)
-                #del self.imag,self.ima5x
 
                 self.imrgba = rgba_to_rgb(self.imrgba)
                 print "saving images"
@@ -386,7 +496,13 @@ class ImagePreview:
                 self.status.set("Done.")
                 self.imag10xenh = None
 
+# ---------
+# StatusBar
+# ---------
 class StatusBar(Frame):
+    '''
+    Class StatusBar created text status while running Celldetekt
+    '''
     def __init__(self, master):
         Frame.__init__(self, master)
         self.label = Label(self, bd=1, relief=SUNKEN, anchor=W)
@@ -398,8 +514,12 @@ class StatusBar(Frame):
         self.label.config(text="")
         self.label.update_idletasks()
 
-def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
 
+#------------------------------------------------------------------------------
+#------------------------------ Celldetekt 2.6 --------------------------------
+#------------------------------------------------------------------------------
+
+def celldim(im,thres,chan,thresw,chanw,thresn,chann,ima5x):
     # adjust raw image size to be multiple of four
     imc=im.crop([0,0,4*(im.size[0]/4),4*(im.size[1]/4)])
     ima5xc=ima5x.crop([0,0,4*(ima5x.size[0]/4),4*(ima5x.size[1]/4)])

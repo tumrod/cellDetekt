@@ -35,7 +35,7 @@ $ source cdenv/bin/activate
 
 #### Step 4: Run the script file
 ```
-(cdenv) $ python cellDetekt_GUI_2016.py
+(cdenv) $ python celldetekt.py
 ```
 
 ### Tips: 

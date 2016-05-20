@@ -48,7 +48,7 @@ $ source cdenv/bin/activate
 ```
 
 ### dmg for Mac
-
+[Download](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip)
 
 ### exe for Windows
-
+[Download](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_exe.zip)

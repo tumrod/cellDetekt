@@ -1,6 +1,8 @@
 # cellDetekt
 
 ## Getting started
+### Running from command line/terminal
+
 #### Requirements:
 - Python 2.7
 - virtualenv 
@@ -38,11 +40,15 @@ $ source cdenv/bin/activate
 (cdenv) $ python celldetekt.py
 ```
 
-### Tips: 
+#### Tips: 
 - You may need to use sudo at start of other commands if there are permission issues.
 - You can deactivate the virtualenv by 
 ```
 (cdenv) $ deactivate 
 ```
 
+### dmg for Mac
+
+
+### exe for Windows
 

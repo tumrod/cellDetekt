@@ -1,5 +1,5 @@
 # ---------------
-# Celldetekt.py
+# celldetekt.py
 # James P. carson
 # Tipparat Umrod
 # ---------------

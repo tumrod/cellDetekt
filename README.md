@@ -47,6 +47,8 @@ $ source cdenv/bin/activate
 (cdenv) $ deactivate 
 ```
 
+[![ScreenShot](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://github.com/tumrod/cellDetekt/blob/master/celldetekt-dmg-demo.mov)
+
 ### dmg for Mac
 [Download](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip)
 

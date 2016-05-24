@@ -1,5 +1,4 @@
-# cellDetekt
-[Article](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2818.2005.01450.x/full)
+# cellDetekt | [How cellDetekt works?](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2818.2005.01450.x/full)
 
 ## Getting started
 
@@ -54,6 +53,18 @@ $ source cdenv/bin/activate
 <MacOSX example>
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/celldetekt-dmg-demo.gif)
 
-
 ## Usage
+* Medium-Strong Expression Detection
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.png)
 
+* Weak Expression Detection
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.png)
+
+* Background Detection
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/bg.png)
+
+* Cellular Scaling
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)
+
+* Running
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/run.png)

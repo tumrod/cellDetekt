@@ -1,6 +1,8 @@
 # cellDetekt
 
 ## Getting started
+
+Download: [MacOSX](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip) [Windows](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_exe.zip)
 ### Running from command line/terminal
 
 #### Requirements:
@@ -49,9 +51,3 @@ $ source cdenv/bin/activate
 
 ### dmg for Mac
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/celldetekt-dmg-demo.gif)
-
-[Download](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip)
-
-
-### exe for Windows
-[Download](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_exe.zip)

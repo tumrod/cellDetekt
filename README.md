@@ -54,17 +54,23 @@ $ source cdenv/bin/activate
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/celldetekt-dmg-demo.gif)
 
 ## Usage
-* Medium-Strong Expression Detection
+#### Medium-Strong Expression Detection
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.png)
 
-* Weak Expression Detection
+
+#### Weak Expression Detection
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.png)
 
-* Background Detection
+#### Background Detection
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/bg.png)
 
-* Cellular Scaling
+#### Cellular Scaling
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)
 
-* Running
+#### Running
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/run.png)

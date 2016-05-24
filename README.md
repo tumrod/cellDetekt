@@ -72,6 +72,15 @@ $ source cdenv/bin/activate
 
 ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.png)
 
+**Threshold between 0-255**: Red/Blue color represented on the preview
+-- detect strong/medium expression
+-- for example, some image has a relatively light stained but there are some noticable strong expression, adjusting the scale to be on a lower threshold will detect the cellular expression at lower level.
+
+**Channels**: Red, Green, Blue, Grey
+-- Depends on the staining colors, choosing the contrasting channel
+-- for example, purple stain (blue+red), the contrasting channel would be green
+
+
 ![strong-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.gif)
 
 
@@ -79,11 +88,24 @@ $ source cdenv/bin/activate
 
 ![weak-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.png)
 
+**Threshold between 0-255**: Yellow color represented on the preview
+-- detect weak expression
+
+**Channels**: Red, Green, Blue, Grey
+-- Depends on the staining colors, choosing the contrasting channel
+-- for example, purple stain (blue+red), the contrasting channel would be green
+
 ![weak-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.gif)
 
 #### Background Detection
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/bg.png)
+
+**Threshold between 0-255**: Grey color represented on the preview
+-- detect cellular background
+
+**Channels**: Red, Green, Blue, Grey
+-- default to grey, unless the background is colored
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/background.gif)
 
@@ -91,8 +113,22 @@ $ source cdenv/bin/activate
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)
 
+** Scaling the cell size: smaller number = smaller cell size
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scale.gif)
 
 #### Running
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/run.png)
+
+* **Update Preview:** 
+⋅⋅* update the image preview on the right panels
+⋅⋅* anytime there is a change in parameter, the update preview button is needed to be clicked
+
+* **Run File:**
+⋅⋅* Run the current parameters and create Image A and Painted image for the whole input file
+⋅⋅* Output in the selected output directory
+
+* **Run Folder:**
+⋅⋅* Run the current parameters and create Image A and Painted image for all the images in the selected input directory
+⋅⋅* Output in the selected output directory

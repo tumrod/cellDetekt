@@ -53,39 +53,46 @@ $ source cdenv/bin/activate
 <MacOSX example>
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/celldetekt-dmg-demo.gif)
 
+---
+
 ## Usage
 #### Preview:
-* Selection: Preview selected section
-* Image A: Pixellated Detection
-* Paited: Expression painted to original image
+* **Selection:** Preview selected section
+* **Image A:** Pixellated Detection
+* **Paited:** Expression painted to original image
 
 #### Colors:
-* Red: Strong expression in the cell
-* Blue: Medium expression in the cell
-* Yellow: Weak expression in the cell
-* Gray: Cellular (no expression)
-* Black: Background/ no cell
+* **Red:** Strong expression in the cell
+* **Blue:** Medium expression in the cell
+* **Yellow:** Weak expression in the cell
+* **Gray:** Cellular (no expression)
+* **Black:** Background/ no cell
 
 #### Medium-Strong Expression Detection
 
 ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.png)
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.gif)
+
+![strong-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-expression.gif)
 
 
 #### Weak Expression Detection
 
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.png)
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.gif)
+![weak-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.png)
+
+![weak-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.gif)
 
 #### Background Detection
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/bg.png)
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/bg.gif)
+
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/background.gif)
 
 #### Cellular Scaling
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scale.gif)
 
 #### Running
+
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/run.png)

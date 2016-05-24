@@ -1,4 +1,5 @@
 # cellDetekt
+[Article](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2818.2005.01450.x/full)
 
 ## Getting started
 
@@ -49,5 +50,10 @@ $ source cdenv/bin/activate
 (cdenv) $ deactivate 
 ```
 
-### dmg for Mac
+### Download and Run!
+<MacOSX example>
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/celldetekt-dmg-demo.gif)
+
+
+## Usage
+

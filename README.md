@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Download: [MacOSX](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip) [Windows](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_exe.zip)
+Download: [MacOSX](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_dmg.zip) |  [Windows](https://cdn.rawgit.com/tumrod/cellDetekt/master/dist_exe.zip)
 ### Running from command line/terminal
 
 #### Requirements:

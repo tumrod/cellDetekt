@@ -107,7 +107,7 @@ $ source cdenv/bin/activate
 * default to grey, unless the background is colored
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/background.gif)
-![](https://github.com/tumrod/cellDetekt/blob/master/asset/background.gif)
+
 #### Cellular Scaling
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)

@@ -80,10 +80,12 @@ $ source cdenv/bin/activate
 * Depends on the staining colors, choosing the contrasting channel
 * for example, purple stain (blue+red), the contrasting channel would be green
 
-![strong-expression-1](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_0.png)
-![strong-expression-2](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_1.png)
-![strong-expression-3](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_2.png)
+![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_0.png)
 
+
+![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_1.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_130_1.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_180_1.png)
+
+![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_2.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_130_2.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_180_2.png)
 
 #### Weak Expression Detection
 

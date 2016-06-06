@@ -105,8 +105,6 @@ $ source cdenv/bin/activate
 **Channels**: Red, Green, Blue, Grey
 * default to grey, unless the background is colored
 
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/background.gif)
-
 #### Cellular Scaling
 
 ![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling.png)

@@ -217,6 +217,7 @@ class ImagePreview:
 
         self.status.set("Process original image")
 
+        ###################
         self.outdir = self.dir2.get()
         self.filename = self.fn.get()
         self.orig_img = Image.open(self.filedir+self.filename)
@@ -235,11 +236,12 @@ class ImagePreview:
         self.img_x, self.img_y = 450/2,450/2
 
         if (self.cropped == None):
-            self.cropped = self.orig_img.crop((int(self.img_x/2*self.scale)-60, int(self.img_y/2*self.scale)-60, int(self.img_x/2*self.scale)+60, int(self.img_y/2*self.scale)+60))
+            self.cropped = self.imag10xenh.crop((int(self.img_x/2*self.scale)-60, int(self.img_y/2*self.scale)-60, int(self.img_x/2*self.scale)+60, int(self.img_y/2*self.scale)+60))
+            self.cropped2 = self.cropped.resize((120, 120),Image.BILINEAR)
 
         # image selection (cropped) preview
         self.create_img_preview()
-        self.new_img = ImageTk.PhotoImage(self.cropped)
+        self.new_img = ImageTk.PhotoImage(self.cropped2)
         self.canv2.update()
         self.canv2.after(0, self.create_canv2)
         self.preview_celldim()
@@ -290,7 +292,9 @@ class ImagePreview:
         When running celldim, self.imv is created along with self.imrgb
         create_img_painted() resize the resulting image (self.imv) and show in the preview
         '''
+
         self.imv = self.imv.resize((int(self.imv.size[0]*self.cell_scale),int(self.imv.size[1]*self.cell_scale)),Image.BILINEAR)
+        self.imv = self.imv.resize((120, 120),Image.BILINEAR)
         self.imv = ImageTk.PhotoImage(self.imv)
         self.canv3.create_image(18, 18, image=self.imv, anchor=NW)
 
@@ -304,6 +308,7 @@ class ImagePreview:
         create_img_a() resize the resulting image (self.imrgb) and show in the preview
         '''
         self.imrgba = self.imrgba.resize((int(self.imrgba.size[0]*self.cell_scale*4),int(self.imrgba.size[1]*self.cell_scale*4)), Image.NEAREST)
+        self.imrgba = self.imrgba.resize((120, 120),Image.BILINEAR)
         self.imrgba = ImageTk.PhotoImage(self.imrgba)
         self.canv4.create_image(18, 18, image=self.imrgba, anchor=NW)
 
@@ -337,9 +342,11 @@ class ImagePreview:
         '''
         x, y = event.x, event.y
         self.img_x, self.img_y = event.x, event.y
-        self.cropped = self.orig_img.crop((int(x*self.scale)-int(self.scale*10), int(y*self.scale)-int(self.scale*10), int(x*self.scale)+int(self.scale*10), int(y*self.scale)+int(self.scale*10)))
-        self.cropped = self.cropped.resize((120, 120),Image.BILINEAR)
-        self.new_img = ImageTk.PhotoImage(self.cropped)
+
+        self.cropped = self.imag10xenh.crop((int(x*self.scale)-int(self.scale*10), int(y*self.scale)-int(self.scale*10), int(x*self.scale)+int(self.scale*10), int(y*self.scale)+int(self.scale*10)))
+
+        self.cropped2 = self.cropped.resize((120, 120),Image.BILINEAR)
+        self.new_img = ImageTk.PhotoImage(self.cropped2)
 
         # update all of the preview
         self.canv2.update()
@@ -399,6 +406,9 @@ class ImagePreview:
         self.thresn= int(self.thresn_entry.get())
         self.chann = self.color_list[self.chn3.get()]
 
+        self.outdir=self.dir2.get()
+        self.filename=self.fn.get()
+
         if (self.chanw[0:3]=='10x'):
             self.imr, self.img, self.imb=self.cropped.split()
         if self.chanw=="10xred":
@@ -418,11 +428,13 @@ class ImagePreview:
         self.status.set("10x signal preserved")
 
         self.imag=self.cropped.resize((int(self.cropped.size[0]/self.cell_scale),int(self.cropped.size[1]/self.cell_scale)),Image.ANTIALIAS)
+        
         print "Image resized to 5x"
         self.status.set("Image resized to 5x")
 
         self.status.set("Processing image takes awhile")
         self.imv,self.imrgba= celldim(self.imag,self.thres,self.chan,self.thresw,self.chanw,self.thresn,self.chann,self.ima5x)
+
         del self.imag,self.ima5x
 
         self.status.set("Result--->>")
@@ -451,14 +463,15 @@ class ImagePreview:
             parsefile=f.split(".")
             lpf=len(parsefile)
             f_ext=parsefile[lpf-1]
+            filePath = f.split("/")
+            filename = filePath[len(filePath)-1]
             if ((f_ext<>"jpg")&(f_ext<>"tif")&(f_ext<>"png")&(f_ext<>"gif")&(f_ext<>"bmp")&(f_ext<>"tiff")):
                 print "Unrecognized image file type ",file
                 print "Must be jpg, jpeg, tif, tiff, png, gif, or bmp"
-                print "Skipping file"
+                print "Skipping file: " + filename
+                self.status.set("Skipping "+ filename)
             else:
                 self.original = Image.open(f)
-                filePath = f.split("/")
-                filename = filePath[len(filePath)-1]
                 self.enhanceImg(self.outdir+ filename[:-4] + "_enhanced.png")
                 self.imag10xenh = Image.open(self.file_enh)
                 if (self.chanw[0:3]=='10x'):
@@ -475,11 +488,12 @@ class ImagePreview:
 
                 self.cell_scale = float(self.ima_scale.get())
                 self.ima5x=self.ima.convert("L").resize((int(self.ima.size[0]/self.cell_scale), int(self.ima.size[1]/self.cell_scale)),Image.BILINEAR)
-
+                
                 print "10x signal preserved"
                 self.status.set("10x signal preserved")
 
                 self.imag=self.imag10xenh.resize((int(self.imag10xenh.size[0]/self.cell_scale),int(self.imag10xenh.size[1]/self.cell_scale)),Image.ANTIALIAS)
+
                 print "Image resized to 5x"
                 self.status.set("Image resized to 5x")
 
@@ -494,7 +508,7 @@ class ImagePreview:
                 self.imrgba.save(self.outdir+ filename[0:len(filename)-4] + "_a.png")
                 self.status.set("Saving" + filename)
                 self.status.set("Done.")
-                self.imag10xenh = None
+                #self.imag10xenh = None
 
 # ---------
 # StatusBar

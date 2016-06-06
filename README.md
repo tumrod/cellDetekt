@@ -80,12 +80,7 @@ $ source cdenv/bin/activate
 * Depends on the staining colors, choosing the contrasting channel
 * for example, purple stain (blue+red), the contrasting channel would be green
 
-![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_0.png)
-
-
-![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_1.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_130_1.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_180_1.png)
-
-![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_100_2.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_130_2.png) ![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/example/strong_180_2.png)
+![strong-expression](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/strong-exp.png)
 
 #### Weak Expression Detection
 
@@ -98,7 +93,7 @@ $ source cdenv/bin/activate
 * Depends on the staining colors, choosing the contrasting channel
 * for example, purple stain (blue+red), the contrasting channel would be green
 
-![weak-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-expression.gif)
+![weak-expression-demo](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/weak-exp.png)
 
 #### Background Detection
 
@@ -118,7 +113,7 @@ $ source cdenv/bin/activate
 
 * Scaling the cell size: smaller number = smaller cell size
 
-![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scale.gif)
+![alt text](https://cdn.rawgit.com/tumrod/cellDetekt/master/asset/scaling-3.png)
 
 #### Running
 

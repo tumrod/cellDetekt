@@ -150,7 +150,7 @@ Here is an animation demonstrating the use of Celldetekt with MacOSX.
 
 **Update Preview:** 
 * Update the image preview on the right panels with currently selected parameters
-* 
+
 **Run File:**
 * Run the current parameters on current image to create Image A and Painted image for the entire image
 * Outputs in the selected output directory
